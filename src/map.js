@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { SIZE_IJ_ARRAY } from "./consts";
 import { getValueMap } from "./utils";
 
-const initialState = getValueMap(SIZE_IJ_ARRAY, 500);
+export const INITIAL_STATE = getValueMap(SIZE_IJ_ARRAY, 500);
 
 export const counterSlice = createSlice({
   name: "map",
-  initialState,
+  initialState: INITIAL_STATE,
   reducers: {
     increment: (state) => {
       state.value += 1;
