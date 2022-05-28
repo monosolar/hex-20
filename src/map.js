@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { SIZE_IJ_ARRAY } from "./consts";
 import { getValueMap } from "./utils";
 
-export const INITIAL_STATE = getValueMap(SIZE_IJ_ARRAY, 500);
+export const INITIAL_STATE = getValueMap(SIZE_IJ_ARRAY, 0);
 
 export const counterSlice = createSlice({
   name: "map",

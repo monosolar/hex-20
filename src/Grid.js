@@ -7,29 +7,34 @@ import { getIJArray, getIntRandom, getNext, getValueMap } from "./utils";
 import { INITIAL_STATE } from "./map";
 
 const Grid = () => {
-  //const values = useSelector((state) => state.map);
   const [values, setValues] = useState(INITIAL_STATE);
 
-  const handleClick = (i, j) => {
-    setValues({
-      ...values,
-      ...getValueMap([[i, j]], 1000),
-      ...getValueMap(getNext([[i, j]]), 1000),
-    });
-  };
+  //   setValues({
+  //     ...values,
+  //     ...getValueMap([[i, j]], 1000),
+  //     ...getValueMap(getNext([[i, j]]), 1000),
+  //   });
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setValues((prevValues) => ({
-        ...prevValues,
+    let activeCell = [gridSize / 2, gridSize / 2];
 
-        ...getValueMap(
-          getNext([[getIntRandom(gridSize), getIntRandom(gridSize)]]),
-          1000
-        ),
-        //...getValueMap([[getIntRandom(6), getIntRandom(6)]], 1000),
-        //...getValueMap(getNext([[i, j]]), 1000),
-      }));
+    const timer = setInterval(() => {
+      const filled = getNext([activeCell]);
+
+      if (filled.length > 0) {
+        activeCell = filled[getIntRandom(filled.length - 1)];
+
+        setValues((prevValues) => {
+          return {
+            ...prevValues,
+
+            ...getValueMap(filled, 1000),
+            //...getValueMap([[getIntRandom(6), getIntRandom(6)]], 1000),
+            //...getValueMap(getNext([[i, j]]), 1000),
+          };
+        });
+      }
+
       //
     }, 100);
 
@@ -48,13 +53,7 @@ const Grid = () => {
   return (
     <svg width="400" viewBox="-100 -100 1000 1000">
       {getIJArray(gridSize, gridSize).map(([i, j]) => (
-        <Cell
-          key={`${i}${j}`}
-          value={values[`${i}${j}`]}
-          i={i}
-          j={j}
-          onClick={handleClick}
-        />
+        <Cell key={`${i}${j}`} value={values[`${i}${j}`]} i={i} j={j} />
       ))}
     </svg>
   );

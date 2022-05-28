@@ -25,11 +25,14 @@ export const getIJArray = (iLength, jLength) =>
   });
 
 export const getNext = (arr) => {
-  return getArc(
-    getRound(arr[0][0], arr[0][1]),
-    getIntRandom(6),
-    getIntRandom(6)
-  );
+  return [
+    arr[0],
+    ...getArc(
+      getRound(arr[0][0], arr[0][1]),
+      0, //getIntRandom(6),
+      6 //getIntRandom(6)
+    ),
+  ];
 };
 
 export const getValueMap = (arr, value) =>
