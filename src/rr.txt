@@ -1,0 +1,64 @@
+const SIZE = 50;
+const w = Math.sqrt(3) * SIZE;
+const h = 2 * SIZE;
+
+const ss = 5;
+
+const isEven = (a) => a % 2 === 0;
+
+const Cell = () => (
+  <g>
+    <polygon
+      points={`${SIZE},0 ${SIZE / 2},-${w / 2} -${SIZE / 2},-${
+        w / 2
+      } -${SIZE},-0 -${SIZE / 2},${w / 2} ${SIZE / 2},${w / 2}`}
+    ></polygon>
+  </g>
+);
+
+// const getGrid = () => {
+//   const t = [];
+
+//   for (var i = 0; i < ss; i++) {
+//     const jLimit = isEven(i) ? ss : ss + 1;
+//     for (var j = 0; j < jLimit; j++) {
+//       const x = i * h * (3 / 4);
+//       const y = j * w;
+//       const yShift = isEven(i) ? 0 : -w / 2;
+
+//       t.push({ x: x, y: yShift + y });
+//     }
+//   }
+
+//   return t;
+// };
+
+const getGrid = () =>
+  new Array(ss * ss).fill().map((_, k) => {
+    const i = Math.floor(k / ss);
+    const j = Math.floor(k % ss) + (isEven(i) ? 0 : 1);
+
+    const x = i * h * (3 / 4);
+    const y = j * w;
+    const yShift = isEven(i) ? 0 : -w / 2;
+
+    return { x, y: yShift + y };
+  });
+
+const Grid = () => {
+  return (
+    <svg width="400" viewBox="-100 -100 1000 1000" fill="white">
+      <g fill="aqua" stroke="black">
+        <g>
+          {getGrid().map(({ x, y }) => (
+            <g key={`${x}${y}`} transform={`translate(${x},${y})`}>
+              <Cell />
+            </g>
+          ))}
+        </g>
+      </g>
+    </svg>
+  );
+};
+// 50 ^ 2 + 87 ^ 2  2500 = 10069
+export default Grid;
